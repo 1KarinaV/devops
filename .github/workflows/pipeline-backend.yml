@@ -64,7 +64,7 @@ jobs:
 
     - name: Build with Gradle Wrapper
       working-directory: ./backend/
-      run: ./gradlew build -x test
+      run: ./gradlew build -x test --scan
 
     # NOTE: The Gradle Wrapper is the default and recommended way to run Gradle (https://docs.gradle.org/current/userguide/gradle_wrapper.html).
     # If your project does not have the Gradle Wrapper configured, you can use the following configuration to run Gradle with a specified version.
