@@ -1,5 +1,6 @@
 package itmo.devops.unit.service;
 
+import itmo.devops.config.RepositoryConfig;
 import itmo.devops.dto.FlightDto;
 import itmo.devops.model.Flight;
 import itmo.devops.repository.FlightRepository;
@@ -9,17 +10,21 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.webservices.client.WebServiceClientTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import static itmo.devops.mapper.FLightMapper.toEntity;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@SpringBootTest
+@WebServiceClientTest(FlightService.class)
 public class FlightServiceTest {
 
     @Autowired
     private FlightService flightService;
+
+    @MockitoBean
+    private RepositoryConfig repositoryConfig;
 
     @MockitoBean
     private FlightRepository flightRepository;

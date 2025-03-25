@@ -1,9 +1,11 @@
 package itmo.devops.unit.controller;
 
+import itmo.devops.config.RepositoryConfig;
 import itmo.devops.controller.FlightController;
 import itmo.devops.dto.DeleteFlightDto;
 import itmo.devops.dto.FlightDto;
 import itmo.devops.model.Flight;
+import itmo.devops.repository.FlightRepository;
 import itmo.devops.service.FlightService;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBeans;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -28,16 +31,14 @@ public class FlightControllerTest {
     @MockitoBean
     private FlightService flightService;
 
-    @Autowired
-    private WebApplicationContext webApplicationContext;
+    @MockitoBean
+    private RepositoryConfig repositoryConfig;
+
+    @MockitoBean
+    private FlightRepository flightRepository;
 
     @Autowired
     private MockMvc mockMvc;
-
-    @BeforeEach
-    public void setup() {
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-    }
 
     @DisplayName("Create successfully")
     @Test
