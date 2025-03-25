@@ -50,8 +50,8 @@ tasks.withType<Test> {
 
 flyway {
     driver = "org.postgresql.Driver"
-    url = project.property("dbUrl").toString()
-    user = project.property("dbUser").toString()
-    password = project.property("dbPassword").toString()
-    schemas = arrayOf(project.property("dbSchema").toString())
+    url = System.getenv("DATASOURCE_URL")
+    user = System.getenv("DATASOURCE_USERNAME")
+    password = System.getenv("DATASOURCE_PASSWORD")
+    schemas = arrayOf("devops_app")
 }
