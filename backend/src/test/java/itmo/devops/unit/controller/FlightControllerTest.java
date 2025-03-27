@@ -8,7 +8,6 @@ import itmo.devops.model.Flight;
 import itmo.devops.repository.FlightRepository;
 import itmo.devops.service.FlightService;
 import org.instancio.Instancio;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -16,14 +15,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
-import org.springframework.test.context.bean.override.mockito.MockitoBeans;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
+import static itmo.devops.utils.JsonDeserializer.objectToJson;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static itmo.devops.utils.JsonDeserializer.objectToJson;
 
 @WebMvcTest(FlightController.class)
 public class FlightControllerTest {
@@ -47,7 +43,7 @@ public class FlightControllerTest {
 
         String requestBody = objectToJson(flightDto);
 
-        mockMvc.perform(put("/flight").content(requestBody).contentType(MediaType.APPLICATION_JSON_VALUE))
+        mockMvc.perform(post("/flight").content(requestBody).contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isCreated());
 
         Mockito.verify(flightService, Mockito.times(1)).create(flightDto);
@@ -62,7 +58,7 @@ public class FlightControllerTest {
 
         Mockito.doThrow(new RuntimeException()).when(flightService).create(flightDto);
 
-        mockMvc.perform(put("/flight").content(requestBody).contentType(MediaType.APPLICATION_JSON_VALUE))
+        mockMvc.perform(post("/flight").content(requestBody).contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest());
 
     }
@@ -119,7 +115,7 @@ public class FlightControllerTest {
 
         Mockito.doThrow(new RuntimeException()).when(flightService).updateById(flight);
 
-        mockMvc.perform(post("/flight").content(requestBody).contentType(MediaType.APPLICATION_JSON_VALUE))
+        mockMvc.perform(put("/flight").content(requestBody).contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest());
 
     }
@@ -131,7 +127,7 @@ public class FlightControllerTest {
         String requestBody = objectToJson(flight);
 
         Mockito.doReturn(flight).when(flightService).updateById(flight);
-        mockMvc.perform(post("/flight").content(requestBody).contentType(MediaType.APPLICATION_JSON_VALUE))
+        mockMvc.perform(put("/flight").content(requestBody).contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk());
 
         Mockito.verify(flightService, Mockito.times(1)).updateById(flight);
@@ -146,7 +142,7 @@ public class FlightControllerTest {
         Mockito.doReturn(null).when(flightService).updateById(flight);
         Mockito.verify(flightService, Mockito.times(0)).updateById(flight);
 
-        mockMvc.perform(post("/flight").content(requestBody).contentType(MediaType.APPLICATION_JSON_VALUE))
+        mockMvc.perform(put("/flight").content(requestBody).contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest());
 
     }
