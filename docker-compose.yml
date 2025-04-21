@@ -1,12 +1,40 @@
 version: '3.7'
 
+networks:
+  avia-network:
+
+name: aviatracking
+
 services:
   back-db:
-    image: postgres
+    image: postgres:16-alpine
     container_name: 'back-db'
     environment:
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "postgres"
       POSTGRES_DB: "postgres"
+    networks:
+      avia-network:
+  avia-back:
+    build:
+      context: ./backend
+      dockerfile: ./Dockerfile
+      target: deploy
+    container_name: avia-back
+    environment:
+      DEBUG: true
+      SPRINGDOC_PATH: /api-docs
+      SPRINGDOC_UI_PATH: /swagger-ui/index.html
+      DATABASE_PLATFORM: org.hibernate.dialect.PostgreSQLDialect
+      DATASOURCE_URL: jdbc:postgresql://back-db:5432/aviatracking
+      APP_NAME: devops-back
+    networks:
+      avia-network:
     ports:
-      - "7777:5432"
+      - "8080:8080"
+    depends_on:
+      - back-db
+    command:
+      - java
+      - -jar
+      - app.jar
