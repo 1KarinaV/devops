@@ -28,6 +28,9 @@ services:
       DATABASE_PLATFORM: org.hibernate.dialect.PostgreSQLDialect
       DATASOURCE_URL: jdbc:postgresql://back-db:5432/aviatracking
       APP_NAME: devops-back
+    secrets:
+      - db_username
+      - db_pass
     networks:
       avia-network:
     ports:
@@ -38,3 +41,9 @@ services:
       - java
       - -jar
       - app.jar
+
+secrets:
+  db_username:
+    environment: DATASOURCE_USERNAME
+  db_pass:
+    environment: DATASOURCE_PASSWORD
