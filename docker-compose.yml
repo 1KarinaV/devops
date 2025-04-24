@@ -10,16 +10,12 @@ services:
     image: postgres:16-alpine
     container_name: 'back-db'
     environment:
-      POSTGRES_USER_FILE: /run/secrets/db_username
-      POSTGRES_PASSWORD_FILE: /run/secrets/db_pass
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
       POSTGRES_DB: "aviatracking"
     networks:
       avia-network:
-    ports:
-      - "4321:5432"
-    secrets:
-      - db_username
-      - db_pass
+
   avia-back:
     build:
       context: ./backend
@@ -33,11 +29,8 @@ services:
       DATABASE_PLATFORM: org.hibernate.dialect.PostgreSQLDialect
       DATASOURCE_URL: jdbc:postgresql://back-db:5432/aviatracking
       APP_NAME: devops-back
-      DATASOURCE_USERNAME: /run/secrets/db_username
-      DATASOURCE_PASSWORD: /run/secrets/db_pass
-    secrets:
-      - db_username
-      - db_pass
+      DATASOURCE_USERNAME: "postgres"
+      DATASOURCE_PASSWORD: "postgres"
     networks:
       avia-network:
     ports:
@@ -48,12 +41,6 @@ services:
       - java
       - -jar
       - app.jar
-
-secrets:
-  db_username:
-    environment: DATASOURCE_USERNAME
-  db_pass:
-    environment: DATASOURCE_PASSWORD
 
 
 # https://github.com/moberwasserlechner/docker-secret-spring-post-processor
