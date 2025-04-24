@@ -12,6 +12,5 @@ public class JsonDeserializer {
         } catch (Exception e) {
             throw new RuntimeException("Failed to convert object to JSON: " + e.getMessage(), e);
         }
-
     }
 }
