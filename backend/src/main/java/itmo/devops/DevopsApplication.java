@@ -28,6 +28,7 @@ public class DevopsApplication {
         return configuration;
     }
 
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http,
                                            CorsConfiguration configuration) throws Exception {

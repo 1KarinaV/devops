@@ -3,3 +3,5 @@ frontend/node_modules
 backend/.gradle
 backend/build
 backend/src/main/resources/**
+deploy/terraform/key
+deploy/terraform/.terraform
