@@ -7,7 +7,7 @@ const useFlights = () => {
     useEffect(() => {
         const fetchFlights = async () => {
             try {
-                const response = await fetch("http://158.160.113.164:9000/flights");
+                const response = await fetch("http://backend-service/flights");
                 if (!response.ok) {
                     throw new Error("Network response was not ok");
                 }
@@ -24,7 +24,7 @@ const useFlights = () => {
 
     const addFlight = async (flight: Flight) => {
         try {
-            const response = await fetch("http://158.160.113.164:9000/flight", {
+            const response = await fetch("http://backend-service/flight", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -45,7 +45,7 @@ const useFlights = () => {
 
     const updateFlight = async (updatedFlight: Flight) => {
         try {
-            const response = await fetch("http://158.160.113.164:9000/flight", {
+            const response = await fetch("http://backend-service/flight", {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -68,7 +68,7 @@ const useFlights = () => {
 
     const deleteFlight = async (id: string) => {
         try {
-            const response = await fetch("http://158.160.113.164:9000/flight", {
+            const response = await fetch("http://backend-service/flight", {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
