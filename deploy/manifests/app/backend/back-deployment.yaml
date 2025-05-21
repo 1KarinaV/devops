@@ -1,38 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: backend-app
-  namespace: devops
-  labels:
-    app: backend-app
+  name: backend-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app:  backend-app
+      app: backend
   template:
     metadata:
       labels:
-        app:  backend-app
+        app: backend
     spec:
       containers:
-      - name: postgres
-        image: postgres:16-alpine
-        ports:
-        - containerPort: 5432
-        env:
-        - name: POSTGRES_DB
-          value: aviatracking
-        - name: POSTGRES_USER
-          value: postgres
-        - name: POSTGRES_PASSWORD
-          value: postgres
-        volumeMounts:
-        - name: postgres-data
-          mountPath: /var/lib/postgresql/data
       - name: backend
         image: 1karinav/avia-back:latest
-        imagePullPolicy: Always
         ports:
         - name: http
           protocol: TCP
@@ -56,9 +38,32 @@ spec:
           value: "postgres"
         resources:
           requests:
-            cpu: "300m"
+            cpu: "500m"
+            memory: 500Mi
           limits:
             cpu: "500m"
+            memory: 1000Mi
+      - name: postgres
+        image: postgres:16-alpine
+        ports:
+        - containerPort: 5432
+        env:
+        - name: POSTGRES_DB
+          value: aviatracking
+        - name: POSTGRES_USER
+          value: postgres
+        - name: POSTGRES_PASSWORD
+          value: postgres
+        volumeMounts:
+        - name: postgres-data
+          mountPath: /var/lib/postgresql/data
+        resources:
+          requests:
+            cpu: "500m"
+            memory: 500Mi
+          limits:
+            cpu: "500m"
+            memory: 1000Mi
       volumes:
       - name: postgres-data
         emptyDir: {}
