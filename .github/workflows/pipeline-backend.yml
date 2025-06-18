@@ -47,6 +47,8 @@ jobs:
       - name: Build with Gradle Wrapper
         working-directory: ./backend/
         run: ./gradlew test --tests "itmo.devops.unit.*" sonar --info
+        env:
+          SONAR_TOKEN: ${{ SONAR_TOKEN }}
 
   build:
     needs: [ test ]
