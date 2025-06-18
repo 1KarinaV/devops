@@ -3,6 +3,7 @@ plugins {
     id("org.springframework.boot") version "3.4.3"
     id("io.spring.dependency-management") version "1.1.7"
     id("org.flywaydb.flyway") version "11.4.0"
+    id("org.sonarqube") version "6.2.0.5505"
 }
 
 group = "itmo"
@@ -55,4 +56,12 @@ flyway {
     user = System.getenv("DATASOURCE_USERNAME")
     password = System.getenv("DATASOURCE_PASSWORD")
     schemas = arrayOf("devops_app")
+}
+
+sonar {
+    properties {
+        property("sonar.projectKey", "Dasxunyasha_devops")
+        property("sonar.organization", "dasxunyasha")
+        property("sonar.host.url", "https://sonarcloud.io")
+    }
 }
