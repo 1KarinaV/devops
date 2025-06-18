@@ -63,5 +63,6 @@ sonar {
         property("sonar.projectKey", "Dasxunyasha_devops")
         property("sonar.organization", "dasxunyasha")
         property("sonar.host.url", "https://sonarcloud.io")
+        property("sonar.tocken", System.getenv("SONAR_TOKEN"))
     }
 }
