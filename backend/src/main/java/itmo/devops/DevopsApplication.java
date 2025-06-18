@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
@@ -32,20 +33,23 @@ public class DevopsApplication {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http,
                                            CorsConfiguration configuration) throws Exception {
-        return http
-                .httpBasic().disable()
-                .csrf().disable()
-                .authorizeHttpRequests(
-                        auth -> auth.anyRequest().permitAll()
+        http
+                .securityMatcher(anyRequest -> true)
+                .authorizeHttpRequests(auth -> auth
+                        .anyRequest().permitAll()
                 )
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .logout()
-                .and()
-                .exceptionHandling()
-                .and()
-                .cors().configurationSource(request -> configuration)
-                .and().build();
+                .csrf(AbstractHttpConfigurer::disable)
+                .sessionManagement(session ->
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
+                .exceptionHandling(ex -> {
+                })
+                .logout(logout -> {
+                })
+                .cors(cors ->
+                        cors.configurationSource(request -> configuration)
+                );
+
+        return http.build();
     }
 }
