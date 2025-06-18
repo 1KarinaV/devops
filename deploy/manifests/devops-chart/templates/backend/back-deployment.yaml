@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-app
+  namespace: devops
+  labels:
+    app: backend-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app:  backend-app
+  template:
+    metadata:
+      labels:
+        app:  backend-app
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:16-alpine
+        ports:
+        - containerPort: 5432
+        env:
+        - name: POSTGRES_DB
+          value: aviatracking
+        - name: POSTGRES_USER
+          value: postgres
+        - name: POSTGRES_PASSWORD
+          value: postgres
+        volumeMounts:
+        - name: postgres-data
+          mountPath: /var/lib/postgresql/data
+      - name: backend
+        image: "1karinav/avia-back:{{ .Values.imageTag }}"
+        imagePullPolicy: Always
+        ports:
+        - name: http
+          protocol: TCP
+          containerPort: 8080
+        startupProbe:
+          httpGet:
+            path: /flights
+            port: 8080
+          failureThreshold: 20
+          periodSeconds: 15
+        env:
+        - name: DEBUG
+          value: "true"
+        - name: SPRINGDOC_PATH
+          value: "/api-docs"
+        - name: SPRINGDOC_UI_PATH
+          value: "/swagger-ui/index.html"
+        - name: DATABASE_PLATFORM
+          value: "org.hibernate.dialect.PostgreSQLDialect"
+        - name: DATASOURCE_URL
+          value: "jdbc:postgresql://localhost:5432/aviatracking"
+        - name: APP_NAME
+          value: "devops-back"
+        - name: DATASOURCE_USERNAME
+          value: "postgres"
+        - name: DATASOURCE_PASSWORD
+          value: "postgres"
+        resources:
+          requests:
+            cpu: "300m"
+          limits:
+            cpu: "500m"
+      volumes:
+      - name: postgres-data
+        emptyDir: {}

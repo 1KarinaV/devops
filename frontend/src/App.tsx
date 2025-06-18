@@ -6,6 +6,7 @@ import CreateModal from "./components/CreateModal";
 import UpdateModal from "./components/UpdateModal";
 import { Flight } from "./types/flight";
 
+
 const App: React.FC = () => {
     const { flights, addFlight, updateFlight, deleteFlight } = useFlights();
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
