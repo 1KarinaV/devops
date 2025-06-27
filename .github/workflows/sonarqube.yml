@@ -38,7 +38,7 @@ jobs:
       - name: Install dependencies
         run: npm install # install
       - name: Test and coverage
-        run: npm test
+        run: react-scripts test --env=jsdom --watchAll=false --coverage
       - uses: sonarsource/sonarqube-scan-action@master
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_FRONTEND }}
