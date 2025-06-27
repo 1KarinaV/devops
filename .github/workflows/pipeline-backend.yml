@@ -19,7 +19,7 @@ on:
 
 jobs:
   test:
-    name: test and analyze
+
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -35,20 +35,11 @@ jobs:
       # Configure Gradle for optimal use in GitHub Actions, including caching of downloaded dependencies.
       # See: https://github.com/gradle/actions/blob/main/setup-gradle/README.md
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582
-
-      - name: Cache SonarQube packages
-        uses: actions/cache@v4
-        with:
-          path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+        uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
 
       - name: Build with Gradle Wrapper
         working-directory: ./backend/
-        run: ./gradlew test --tests "itmo.devops.unit.*" sonar --info
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: ./gradlew test --tests "itmo.devops.unit.*"
 
   build:
     needs: [ test ]
