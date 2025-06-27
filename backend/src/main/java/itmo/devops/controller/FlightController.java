@@ -36,7 +36,7 @@ public class FlightController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @Operation(summary = "удаление полета по id")
+    @Operation(summary = " удаление полета по id")
     @DeleteMapping(value = "/flight")
     public ResponseEntity<?> delete(@RequestBody DeleteFlightDto dto) {
         try {
