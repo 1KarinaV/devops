@@ -24,7 +24,7 @@ public class FlightService {
     public void create(FlightDto flightDto) {
         Flight flight = toEntity(flightDto);
 
-        log.info("Сохранить запись flight = {} в БД", flight);
+        log.info(" Сохранить запись flight = {} в БД", flight);
         try {
             repository.save(flight);
         } catch (IllegalArgumentException e) {
