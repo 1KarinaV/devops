@@ -4,7 +4,13 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo '🔨 Building the project...'
+                echo 'Try to deploy to Kubernetes'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo 'Another steps'
             }
         }
     }
