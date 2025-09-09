@@ -1,6 +1,10 @@
 pipeline {
     agent any
-
+    environment {
+        HELM_VERSION = "v3.14.4"
+        HELM_HOME = "${WORKSPACE}/bin"
+        PATH = "${WORKSPACE}/bin:${env.PATH}"
+    }
     stages {
         stage('Build') {
             steps {
@@ -16,14 +20,13 @@ pipeline {
         stage('Install Helm') {
             steps {
                 sh '''
-                curl -fsSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+                mkdir -p $HELM_HOME
+                curl -fsSL https://get.helm.sh/helm-${HELM_VERSION}-linux-amd64.tar.gz -o helm.tar.gz
+                tar -zxvf helm.tar.gz
+                mv linux-amd64/helm $HELM_HOME/helm
+                chmod +x $HELM_HOME/helm
+                helm version
                 '''
-            }
-        }
-        stage('Deploy with Helm') {
-            steps {
-                sh 'helm version'
-                sh 'helm upgrade --install myapp ./chart --namespace default'
             }
         }
     }
