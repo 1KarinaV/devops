@@ -29,6 +29,11 @@ pipeline {
                 '''
             }
         }
+        stage('List files') {
+            steps {
+                sh 'ls -la $WORKSPACE'
+            }
+        }
         stage('Install helm chart') {
             steps {
                 sh '''
