@@ -5,18 +5,12 @@ pipeline {
         HELM_HOME = "${WORKSPACE}/bin"
         PATH = "${WORKSPACE}/bin:${env.PATH}"
     }
-    stages {
-        stage('Build') {
-            steps {
-                echo 'Try to deploy to Kubernetes'
-            }
-        }
 
-        stage('Test') {
-            steps {
-                echo 'Another steps'
-            }
-        }
+    parameters {
+        string(name: 'HELM_CHART_VERSION', defaultValue: '0.1.0', description: 'Helm chart')
+    }
+
+    stages {
         stage('Install Helm') {
             steps {
                 sh '''
@@ -37,7 +31,7 @@ pipeline {
         stage('Install helm chart') {
             steps {
                 sh '''
-                    helm upgrade --install devops-chart $WORKSPACE/deploy/manifests/devops-chart --version 0.2.0 -f $WORKSPACE/deploy/manifests/devops-chart/values.yaml
+                    helm upgrade --install devops-chart $WORKSPACE/deploy/manifests/devops-chart --version ${params.HELM_CHART_VERSION} -f $WORKSPACE/deploy/manifests/devops-chart/values.yaml
                 '''
             }
         }
