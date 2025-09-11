@@ -37,7 +37,7 @@ pipeline {
         stage('Install helm chart') {
             steps {
                 sh '''
-                    helm upgrade --install devops-chart $WORKSPACE/deploy/manifests/devops-chart --version 0.1.0 -f $WORKSPACE/deploy/manifests/devops-chart/values.yaml
+                    helm upgrade --install devops-chart $WORKSPACE/deploy/manifests/devops-chart --version 0.2.0 -f $WORKSPACE/deploy/manifests/devops-chart/values.yaml
                 '''
             }
         }
