@@ -72,9 +72,10 @@ flyway {
 
 sonar {
     properties {
-        property("sonar.projectKey", "Dasxunyasha_devops")
+        property("sonar.projectKey", "devops_backend")
         property("sonar.organization", "dasxunyasha")
         property("sonar.host.url", "https://sonarcloud.io")
+        property("sonar.projectName", "Devops backend")
         property("sonar.token", System.getenv("SONAR_TOKEN"))
         property("sonar.coverage.jacoco.xmlReportPaths", "${buildDir}/reports/jacoco/test/jacocoTestReport.xml")
     }
