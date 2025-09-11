@@ -171,41 +171,41 @@ describe("useFlights", () => {
         expect(result.current.flights.find(f => f.id === "1")).toEqual(mockFlights[0]);
     });
 
-    // it("Удаляется рейс", async () => {
-    //     (global.fetch as jest.Mock).mockResolvedValueOnce({
-    //         ok: true,
-    //         json: async () => mockFlights,
-    //     });
-    //     const { result } = renderHook(() => useFlights());
-    //     await act(async () => {});
+    it("Удаляется рейс", async () => {
+        (global.fetch as jest.Mock).mockResolvedValueOnce({
+            ok: true,
+            json: async () => mockFlights,
+        });
+        const { result } = renderHook(() => useFlights());
+        await act(async () => {});
 
-    //     (global.fetch as jest.Mock).mockResolvedValueOnce({ ok: true });
+        (global.fetch as jest.Mock).mockResolvedValueOnce({ ok: true });
 
-    //     await act(async () => {
-    //         await result.current.deleteFlight("1");
-    //     });
+        await act(async () => {
+            await result.current.deleteFlight("1");
+        });
 
-    //     expect(result.current.flights.find(f => f.id === "1")).toBeUndefined();
-    // });
+        expect(result.current.flights.find(f => f.id === "1")).toBeUndefined();
+    });
 
-    // it("Вывод ошибки при неудачном удалении рейса", async () => {
-    //     (global.fetch as jest.Mock).mockResolvedValueOnce({
-    //         ok: true,
-    //         json: async () => mockFlights,
-    //     });
-    //     const { result } = renderHook(() => useFlights());
-    //     await act(async () => {});
+    it("Вывод ошибки при неудачном удалении рейса", async () => {
+        (global.fetch as jest.Mock).mockResolvedValueOnce({
+            ok: true,
+            json: async () => mockFlights,
+        });
+        const { result } = renderHook(() => useFlights());
+        await act(async () => {});
 
-    //     (global.fetch as jest.Mock).mockResolvedValueOnce({ ok: false });
+        (global.fetch as jest.Mock).mockResolvedValueOnce({ ok: false });
 
-    //     await act(async () => {
-    //         await result.current.deleteFlight("1");
-    //     });
+        await act(async () => {
+            await result.current.deleteFlight("1");
+        });
 
-    //     expect(console.error).toHaveBeenCalledWith(
-    //         "Ошибка при удалении рейса:",
-    //         expect.any(Error)
-    //     );
-    //     expect(result.current.flights.find(f => f.id === "1")).toEqual(mockFlights[0]);
-    // });
+        expect(console.error).toHaveBeenCalledWith(
+            "Ошибка при удалении рейса:",
+            expect.any(Error)
+        );
+        expect(result.current.flights.find(f => f.id === "1")).toEqual(mockFlights[0]);
+    });
 });
