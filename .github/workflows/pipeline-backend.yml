@@ -16,6 +16,7 @@ on:
     branches: [ "main" ]
     paths:
       - 'backend/**'
+      - .github/workflows/pipeline-backend.yml
 
 jobs:
   test:
