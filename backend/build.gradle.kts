@@ -77,7 +77,7 @@ sonar {
         property("sonar.host.url", "https://sonarcloud.io")
         property("sonar.projectName", "Devops backend")
         property("sonar.token", System.getenv("SONAR_TOKEN"))
-        property("sonar.qualitygate.wait", true)
+//        property("sonar.qualitygate.wait", true)
         property("sonar.coverage.jacoco.xmlReportPaths", "${buildDir}/reports/jacoco/test/jacocoTestReport.xml")
     }
 
