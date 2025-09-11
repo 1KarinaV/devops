@@ -4,6 +4,7 @@ plugins {
     id("io.spring.dependency-management") version "1.1.7"
     id("org.flywaydb.flyway") version "11.4.0"
     id("org.sonarqube") version "6.2.0.5505"
+    jacoco
 }
 
 group = "itmo"
@@ -13,6 +14,17 @@ java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(17)
     }
+}
+
+tasks.withType<JacocoReport> {
+    reports {
+        xml.required.set(true)
+        html.required.set(true)
+    }
+}
+
+tasks.test {
+    finalizedBy(tasks.jacocoTestReport)
 }
 
 repositories {
@@ -64,5 +76,10 @@ sonar {
         property("sonar.organization", "dasxunyasha")
         property("sonar.host.url", "https://sonarcloud.io")
         property("sonar.token", System.getenv("SONAR_TOKEN"))
+        property("sonar.coverage.jacoco.xmlReportPaths", "${buildDir}/reports/jacoco/test/jacocoTestReport.xml")
+    }
+
+    jacoco {
+        toolVersion = "0.8.8"
     }
 }
