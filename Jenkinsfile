@@ -6,10 +6,6 @@ pipeline {
         PATH = "${WORKSPACE}/bin:${env.PATH}"
     }
 
-    parameters {
-        string(name: 'HELM_CHART_VERSION', defaultValue: '0.1.0', description: 'Helm chart version')
-    }
-
     stages {
         stage('Install Helm') {
             steps {
@@ -31,7 +27,7 @@ pipeline {
         stage('Install helm chart') {
             steps {
                 sh """
-                    helm upgrade --install devops-chart $WORKSPACE/deploy/manifests/devops-chart --version ${params.HELM_CHART_VERSION} -f $WORKSPACE/deploy/manifests/devops-chart/values.yaml
+                    helm upgrade --install devops-chart $WORKSPACE/deploy/manifests/devops-chart -f $WORKSPACE/deploy/manifests/devops-chart/values.yaml
                 """
             }
         }
