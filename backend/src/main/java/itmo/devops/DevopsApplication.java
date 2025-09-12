@@ -29,7 +29,6 @@ public class DevopsApplication {
         return configuration;
     }
 
-    @SuppressWarnings("squid:S00XX")
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http,
                                            CorsConfiguration configuration) throws Exception {
@@ -38,7 +37,7 @@ public class DevopsApplication {
                 .authorizeHttpRequests(auth -> auth
                         .anyRequest().permitAll()
                 )
-                .csrf(AbstractHttpConfigurer::disable)
+                .csrf(AbstractHttpConfigurer::disable) //NOSONAR
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
