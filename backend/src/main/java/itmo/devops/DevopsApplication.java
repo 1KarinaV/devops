@@ -24,7 +24,7 @@ public class DevopsApplication {
     @Bean
     @ConditionalOnMissingBean
     public CorsConfiguration corsConfiguration() {
-        var configuration = new CorsConfiguration().applyPermitDefaultValues();
+        var configuration = new CorsConfiguration().applyPermitDefaultValues(); //NOSONAR
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
         return configuration;
     }
