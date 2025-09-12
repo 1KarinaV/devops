@@ -1,4 +1,5 @@
-FROM node:21.7.1 as builder
+# Builder stage: собираем фронтенд
+FROM --platform=linux/arm64 node:21.7.1 as builder
 WORKDIR /app
 COPY . ./
 RUN npm config set legacy-peer-deps true &&  \
@@ -6,8 +7,7 @@ RUN npm config set legacy-peer-deps true &&  \
     npm install && \
     npm run build
 
-# Use Nginx as the production server
-FROM arm64v8/nginx
-# FROM nginx
+# Production stage: запускаем на arm64 nginx
+FROM --platform=linux/arm64 arm64v8/nginx
 COPY --from=builder /app/build /usr/share/nginx/html
 CMD ["nginx", "-g", "daemon off;"]
