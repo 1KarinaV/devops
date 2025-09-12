@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: devops
+  namespace: default
   name: front-app
   labels:
     app: front-app
