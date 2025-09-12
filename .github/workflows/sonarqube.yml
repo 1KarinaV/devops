@@ -29,6 +29,7 @@ jobs:
           projectBaseDir: frontend
       - name: Wait for Quality Gate
         uses: sonarsource/sonarqube-quality-gate-action@master
+        timeout-minutes: 5
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_FRONTEND }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}    
