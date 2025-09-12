@@ -16,11 +16,17 @@ jobs:
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
       - name: Install dependencies
+<<<<<<< HEAD
         working-directory: frontend
         run: npm install
       - name: Run tests with coverage
         working-directory: frontend
         run: npm test -- --watchAll=false --coverage    
+=======
+        run: npm install
+      - name: Test and coverage
+        run: npm test
+>>>>>>> beeb1f4 (add coverage)
       - uses: sonarsource/sonarqube-scan-action@master
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_FRONTEND }}
