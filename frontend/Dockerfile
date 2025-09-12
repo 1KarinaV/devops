@@ -7,7 +7,6 @@ RUN npm config set legacy-peer-deps true &&  \
     npm install && \
     npm run build
 
-# Production stage: запускаем на arm64 nginx
 FROM --platform=linux/arm64 arm64v8/nginx
 COPY --from=builder /app/build /usr/share/nginx/html
 CMD ["nginx", "-g", "daemon off;"]
