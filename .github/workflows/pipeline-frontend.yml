@@ -59,11 +59,11 @@ jobs:
       - name: Build and push ARM64 image
         uses: docker/build-push-action@v3
         with:
-          context: .
+          context: ./frontend
           file: ./frontend/Dockerfile
           platforms: linux/arm64
           push: true
-          tags: latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/front-app:latest
           build-args: |
             BASE_IMAGE=arm64v8/nginx
       - name: send telegram message on push
