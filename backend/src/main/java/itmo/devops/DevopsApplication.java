@@ -29,7 +29,7 @@ public class DevopsApplication {
         return configuration;
     }
 
-
+    @SuppressWarnings("squid:S00XX")
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http,
                                            CorsConfiguration configuration) throws Exception {
