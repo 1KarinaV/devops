@@ -84,4 +84,5 @@ sonar {
     jacoco {
         toolVersion = "0.8.8"
     }
+
 }
