@@ -7,7 +7,7 @@ RUN npm config set legacy-peer-deps true &&  \
     npm run build
 
 # Use Nginx as the production server
-# FROM arm64v8/nginx
-FROM nginx
+FROM arm64v8/nginx
+# FROM nginx
 COPY --from=builder /app/build /usr/share/nginx/html
 CMD ["nginx", "-g", "daemon off;"]
